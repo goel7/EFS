@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="distBEStyles.css" />
+    <title>BE Distribution</title>
+  </head>
+  <body>
+    <nav>
+      <div class="linkHolder">
+        <a href="index.html">Home</a>
+      </div>
+    </nav>
+
+    <h1>Optimal BE Distribution</h1>
+
+    <div class="inputBE">
+      <p>Enter Total BE:</p>
+      <input type="text" id="totalBE" autofocus />
+    </div>
+
+    <div class="inputMisc">
+      <p>Current Misc Level:</p>
+      <input type="text" id="optMisc" placeholder="0 (optional)" />
+    </div>
+
+    <div class="inputWater">
+      <p>Enter Water Level:</p>
+      <input type="text" id="waterLvl" placeholder="0" />
+    </div>
+
+    <div class="btn">
+      <button id="EnterBtn">Enter</button>
+    </div>
+
+    <article id="results">
+      <p>Misc: <span id="miscLevel"></span><a href="#miscEggsHelp">?</a></p>
+      <p>Main: <span id="mainLevel"></span><a href="#mainEggsHelp">?</a></p>
+      <p>Turtle: <span id="turtleLevel"></span></p>
+      <p>GK: <span id="GKLevel"></span></p>
+    </article>
+
+    <div class="easterEggs">
+      <article class="miscEggsHelp" id="miscEggsHelp">
+        <h3>Misc Easter Eggs</h3>
+        <p>Cactus</p>
+        <p>Garbage</p>
+        <p>Hourglass</p>
+        <p>Idol</p>
+        <p>King Cobra</p>
+        <p>Ninja</p>
+        <p>Present</p>
+        <p>Volcano</p>
+        <p>Radioactive</p>
+        <p>Scientist</p>
+        <p>Super</p>
+        <p>Treasure</p>
+        <p>Unstable</p>
+      </article>
+      <article class="mainEggsHelp" id="mainEggsHelp">
+        <h3>Main Easter Eggs</h3>
+        <p>Demeaning</p>
+        <p>Dragon</p>
+        <p>Wonderland</p>
+        <p>Faberge</p>
+        <p>Newton</p>
+        <p>Eggplant</p>
+        <p>AFK</p>
+      </article>
+    </div>
+
+    <script src="distBE.js"></script>
+  </body>
+</html>

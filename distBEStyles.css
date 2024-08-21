@@ -1,0 +1,253 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #eee;
+  margin: 0;
+}
+
+nav {
+  margin-top: 0;
+  padding-top: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100dvw;
+  height: 4rem;
+  background-color: #ababab;
+
+  font-size: 1.4rem;
+}
+
+.linkHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7rem;
+  height: 3rem;
+}
+
+.linkHolder:hover {
+  width: 9rem;
+  height: 3rem;
+  background-color: rgba(120, 120, 120, 0.3);
+  border-radius: 7px;
+  transition: 50ms ease-in;
+}
+
+.linkHolder:not(:hover) {
+  transition: 50ms ease-in;
+}
+
+a {
+  color: #111;
+  text-decoration-line: underline;
+  text-underline-offset: 4.5px;
+  line-height: 2.8rem;
+  text-align: center;
+  width: 10rem;
+  height: 3rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.inputBE,
+.inputWater,
+.inputMisc {
+  margin-top: 2.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputWater,
+.inputMisc {
+  margin-top: 0.75rem;
+}
+
+.inputWater {
+  position: relative;
+  right: 1rem;
+}
+
+.inputMisc {
+  position: relative;
+  right: 1.4rem;
+}
+
+.inputBE p,
+.inputWater p,
+.inputMisc p {
+  margin: 1rem;
+  font-size: 1.5rem;
+}
+
+.inputBE input,
+.inputWater input,
+.inputMisc input {
+  text-align: center;
+  font-size: 1.3rem;
+
+  height: 2.5rem;
+  width: 13rem;
+
+  border: 2.5px solid #666;
+  border-radius: 10px;
+  outline: unset;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.btn {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+#EnterBtn {
+  width: 8.4rem;
+  height: 3rem;
+
+  background: linear-gradient(140deg, #a2f229, #81db21);
+  border: 0px;
+  border-radius: 5px;
+
+  font-size: 1.5rem;
+  color: #222;
+
+  /* box-shadow: 3.5px 3.5px 8px rgba(0, 0, 0, 0.5); */
+  box-shadow: 3.5px 3.5px 8px rgba(93, 191, 14, 0.7);
+}
+
+#EnterBtn:hover {
+  box-shadow: 3.5px 3.5px 6.5px rgba(93, 191, 14, 0.7);
+  transition: 0.1s;
+}
+
+#EnterBtn:active {
+  box-shadow: 3.5px 3.5px 2px rgba(93, 191, 14, 0.7);
+  width: 8.3rem;
+  height: 3rem;
+  transition: 0.1s;
+}
+
+#results {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 1.5rem;
+  line-height: 0.6;
+  visibility: hidden;
+}
+
+#results p,
+#results a {
+  line-height: 1.6rem;
+}
+
+#results a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+
+  position: relative;
+  left: 1.5rem;
+  bottom: 0.15rem;
+
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+
+  background-color: rgba(118, 211, 230, 0.5);
+  text-decoration-line: none;
+}
+
+#results p:nth-child(1),
+#results p:nth-child(2) {
+  position: relative;
+  left: 0.61rem;
+}
+
+.easterEggs {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.miscEggsHelp,
+.mainEggsHelp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 20rem;
+  height: min-content;
+  padding: 1.5rem 0.5rem 2rem 0.5rem;
+  margin: 3rem;
+
+  line-height: 0.3;
+  border-radius: 1.5rem;
+  font-size: 1.3rem;
+
+  scroll-margin-top: 3rem;
+}
+
+.miscEggsHelp {
+  background: linear-gradient(
+    to top left,
+    rgba(130, 238, 253, 0.7),
+    rgba(115, 223, 238, 0.9)
+  );
+  border: solid rgba(100, 208, 223, 0.8) 6px;
+}
+
+.mainEggsHelp {
+  background: linear-gradient(
+    to top right,
+    rgba(30, 144, 255, 0.7),
+    rgba(25, 129, 240, 0.9)
+  );
+  border: solid rgba(20, 114, 225, 0.7) 6px;
+}
+
+.easterEggs h3 {
+  font-size: 1.5rem;
+  margin: 1.2rem 0 2.2rem 0;
+}
+
+@media screen and (max-width: 900px) {
+  html {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2.35rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  .easterEggs {
+    flex-direction: column;
+    align-items: center;
+  }
+}
