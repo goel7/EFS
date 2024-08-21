@@ -14,6 +14,18 @@ const resultsElem = document.getElementById("results");
 const mainQuant = 5;
 const turtleQuant = 4;
 
+function fixDegree(x) {
+  let preE = Number(String(x).split("e")[0]);
+  let postE = Number(String(x).split("e")[1]);
+
+  const degree = Math.floor(Math.log10(Math.abs(preE)));
+  preE = preE / 10 ** degree;
+  postE = postE + degree;
+  const result = `${preE.toFixed(2)}e${postE}`;
+
+  return result;
+}
+
 function distBE(totalBE, discount) {
   const [base, power] = totalBE.split("e").map(Number);
 
@@ -31,9 +43,7 @@ function distBE(totalBE, discount) {
 
     if (String(postE).includes(".")) {
       const numList = String(postE).split(".");
-      return `${(preE * 10 ** (Number(numList[1]) / 10)).toFixed(2)}e${
-        numList[0]
-      }`;
+      return `${preE * 10 ** (Number(numList[1]) / 10)}e${numList[0]}`;
     } else {
       return `${preE.toFixed(2)}e${postE}`;
     }
@@ -45,25 +55,21 @@ function distBE(totalBE, discount) {
 
     if (String(postE).includes(".")) {
       const numList = String(postE).split(".");
-      return `${(preE * 10 ** (Number(numList[1]) / 10)).toFixed(2)}e${
-        numList[0]
-      }`;
+      return `${preE * 10 ** (Number(numList[1]) / 10)}e${numList[0]}`;
     } else {
       return `${preE.toFixed(2)}e${postE}`;
     }
   }
 
-  const GKEasterDist = () => `${perGK.toFixed(2)}e${power}`;
+  const GKEasterDist = () => `${perGK}e${power}`;
 
   return {
     Misc: `${miscEasterDist()}`,
-    Main: `${mainEasterDist()}`,
-    Turtle: `${turtleEasterDist()}`,
-    GK: `${GKEasterDist()}`,
+    Main: `${fixDegree(mainEasterDist())}`,
+    Turtle: `${fixDegree(turtleEasterDist())}`,
+    GK: `${fixDegree(GKEasterDist())}`,
   };
 }
-
-// Functions below for DOM
 
 const calcWaterDiscount = (waterLevel) =>
   waterLevel >= 150 ? 0.95 ** 150 : 0.95 ** waterLevel;
