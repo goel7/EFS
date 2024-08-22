@@ -26,8 +26,38 @@ function fixDegree(x) {
   return result;
 }
 
+function formatSci(input) {
+  const suffixes = {
+    k: 3,
+    K: 3,
+    M: 6,
+    B: 9,
+    T: 12,
+    q: 15,
+    Q: 18,
+    s: 21,
+    S: 24,
+    O: 27,
+    N: 30,
+    d: 33,
+    U: 36,
+    D: 39,
+  };
+
+  const suffix = input.match(/[a-zA-Z]$/);
+
+  if (suffix) {
+    const base = parseFloat(input);
+    const power = suffixes[suffix[0]];
+    return [base, power];
+  } else {
+    const [base, power] = input.split("e").map(Number);
+    return [base, power];
+  }
+}
+
 function distBE(totalBE, discount) {
-  const [base, power] = totalBE.split("e").map(Number);
+  const [base, power] = formatSci(totalBE);
 
   const perMisc = (base * (0.1 / 13)) / discount;
   const perMain = (base * (0.5 / 7)) / discount;
@@ -79,6 +109,8 @@ function updateWaterInput() {
     waterLvlElem.value = "";
   } else if (waterLvlElem.value > 150) {
     waterLvlElem.value = 150;
+  } else {
+    waterLvlElem.value = Math.floor(waterLvlElem.value);
   }
 }
 
