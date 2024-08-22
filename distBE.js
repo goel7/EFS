@@ -113,24 +113,20 @@ const calcWaterDiscount = (waterLevel) =>
   waterLevel >= 150 ? 0.95 ** 150 : 0.95 ** waterLevel;
 
 function updateWaterInput() {
-  if (waterLvlElem.value === "" || waterLvlElem.value <= 0) {
+  let waterLevel = parseFloat(waterLvlElem.value);
+  if (isNaN(waterLevel) || waterLevel <= 0) {
     waterLvlElem.value = "";
-  } else if (waterLvlElem.value > 150) {
-    waterLvlElem.value = 150;
-  } else if (waterLvlElem.value > 0 && waterLvlElem.value <= 150) {
-    waterLvlElem.value = Math.floor(waterLvlElem.value);
-  } else if (typeof waterLvlElem.value !== Number) {
-    waterLvlElem.value = "";
+  } else {
+    waterLvlElem.value = Math.min(150, Math.floor(waterLevel));
   }
 }
 
 function updateOptMiscInput() {
-  if (optMiscElem.value === "" || optMiscElem.value <= 0) {
+  let optMisc = parseFloat(optMiscElem.value);
+  if (isNaN(optMisc) || optMisc <= 0) {
     optMiscElem.value = "";
-  } else if (optMiscElem.value > 0) {
-    optMiscElem.value = Math.floor(optMiscElem.value);
-  } else if (typeof optMiscElem.value !== Number) {
-    optMiscElem.value = "";
+  } else {
+    optMiscElem.value = Math.floor(optMisc);
   }
 }
 
@@ -138,8 +134,8 @@ function updateDistribution() {
   updateWaterInput();
   updateOptMiscInput();
 
-  const discount = calcWaterDiscount(waterLvlElem.value);
-  const optMisc = optMiscElem.value;
+  const discount = calcWaterDiscount(parseFloat(waterLvlElem.value) || 0);
+  const optMisc = parseFloat(optMiscElem.value) || 0;
   const { Misc, Main, Turtle, GK } = distributeBE(totalBEElem.value, discount);
 
   if (optMiscElem.value <= 0) {
