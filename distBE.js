@@ -158,16 +158,9 @@ function updateDistribution() {
   resultsElem.style.visibility = "visible";
 }
 
-const updateOnEnter = (e) => {
-  if (e.key === "Enter") {
-    updateDistribution();
-  }
-};
+const updateOnEnter = (e) => e.key === "Enter" && updateDistribution();
 
-// const updateOnEnter = (e) => e.key === "Enter" && updateDistribution();
-
-button.addEventListener("click", (e) => updateDistribution());
-
+button.addEventListener("click", updateDistribution);
 totalBEElem.addEventListener("keyup", updateOnEnter);
 optMiscElem.addEventListener("keyup", updateOnEnter);
 waterLvlElem.addEventListener("keyup", updateOnEnter);
