@@ -1,5 +1,5 @@
 const button = document.getElementById("EnterBtn");
-const totalBE = document.getElementById("totalBE");
+const totalBEElem = document.getElementById("totalBE");
 const waterLvlElem = document.getElementById("waterLvl");
 const optMiscElem = document.getElementById("optMisc");
 
@@ -10,11 +10,64 @@ let gkLvlsElem = document.getElementById("GKLevel");
 
 const resultsElem = document.getElementById("results");
 
-// DONT CHANGE THESE QUANT VALUES
-const mainQuant = 5;
-const turtleQuant = 4;
+class EasterDistribution {
+  constructor(base, power, discount) {
+    this.base = base;
+    this.power = power;
+    this.discount = discount;
+    this.mainQuant = 5;
+    this.turtleQuant = 4;
+  }
 
-function fixDegree(x) {
+  misc() {
+    const perMisc = (this.base * (0.1 / 13)) / this.discount;
+    return Math.floor((this.power + Math.log10(perMisc)) / Math.log10(2) - 1);
+  }
+
+  main() {
+    const perMain = (this.base * (0.5 / 7)) / this.discount;
+    const preE = Math.sqrt(perMain / this.mainQuant);
+    const postE = (this.power + 1) / 2;
+
+    return this.formatExponential(preE, postE);
+  }
+
+  turtle() {
+    const perTurtle = (this.base * 0.2) / this.discount;
+    const preE = (perTurtle / this.turtleQuant) ** 0.4;
+    const postE = (this.power + 1) / 2.5;
+
+    return this.formatExponential(preE, postE);
+  }
+
+  gk() {
+    const perGK = (this.base * 0.2) / this.discount;
+    return `${perGK}e${this.power}`;
+  }
+
+  formatExponential(preE, postE) {
+    if (String(postE).includes(".")) {
+      const numList = String(postE).split(".");
+      return `${preE * 10 ** (Number(numList[1]) / 10)}e${numList[0]}`;
+    } else {
+      return `${preE.toFixed(2)}e${postE}`;
+    }
+  }
+}
+
+function distributeBE(totalBE, discount) {
+  const [base, power] = getBasePower(totalBE);
+  const easterDist = new EasterDistribution(base, power, discount);
+
+  return {
+    Misc: easterDist.misc(),
+    Main: formatSci(easterDist.main()),
+    Turtle: formatSci(easterDist.turtle()),
+    GK: formatSci(easterDist.gk()),
+  };
+}
+
+function formatSci(x) {
   let preE = Number(String(x).split("e")[0]);
   let postE = Number(String(x).split("e")[1]);
 
@@ -26,7 +79,7 @@ function fixDegree(x) {
   return result;
 }
 
-function formatSci(input) {
+function getBasePower(input) {
   const suffixes = {
     k: 3,
     K: 3,
@@ -56,51 +109,6 @@ function formatSci(input) {
   }
 }
 
-function distBE(totalBE, discount) {
-  const [base, power] = formatSci(totalBE);
-
-  const perMisc = (base * (0.1 / 13)) / discount;
-  const perMain = (base * (0.5 / 7)) / discount;
-  const perTurtle = (base * 0.2) / discount;
-  const perGK = (base * 0.2) / discount;
-
-  const miscEasterDist = () =>
-    Math.floor((power + Math.log10(perMisc)) / Math.log10(2) - 1);
-
-  function mainEasterDist() {
-    const preE = Math.sqrt(perMain / mainQuant);
-    const postE = (power + 1) / 2;
-
-    if (String(postE).includes(".")) {
-      const numList = String(postE).split(".");
-      return `${preE * 10 ** (Number(numList[1]) / 10)}e${numList[0]}`;
-    } else {
-      return `${preE.toFixed(2)}e${postE}`;
-    }
-  }
-
-  function turtleEasterDist() {
-    const preE = (perTurtle / turtleQuant) ** 0.4;
-    const postE = (power + 1) / 2.5;
-
-    if (String(postE).includes(".")) {
-      const numList = String(postE).split(".");
-      return `${preE * 10 ** (Number(numList[1]) / 10)}e${numList[0]}`;
-    } else {
-      return `${preE.toFixed(2)}e${postE}`;
-    }
-  }
-
-  const GKEasterDist = () => `${perGK}e${power}`;
-
-  return {
-    Misc: `${miscEasterDist()}`,
-    Main: `${fixDegree(mainEasterDist())}`,
-    Turtle: `${fixDegree(turtleEasterDist())}`,
-    GK: `${fixDegree(GKEasterDist())}`,
-  };
-}
-
 const calcWaterDiscount = (waterLevel) =>
   waterLevel >= 150 ? 0.95 ** 150 : 0.95 ** waterLevel;
 
@@ -109,13 +117,19 @@ function updateWaterInput() {
     waterLvlElem.value = "";
   } else if (waterLvlElem.value > 150) {
     waterLvlElem.value = 150;
-  } else {
+  } else if (waterLvlElem.value > 0 && waterLvlElem.value <= 150) {
     waterLvlElem.value = Math.floor(waterLvlElem.value);
+  } else if (typeof waterLvlElem.value !== Number) {
+    waterLvlElem.value = "";
   }
 }
 
 function updateOptMiscInput() {
   if (optMiscElem.value === "" || optMiscElem.value <= 0) {
+    optMiscElem.value = "";
+  } else if (optMiscElem.value > 0) {
+    optMiscElem.value = Math.floor(optMiscElem.value);
+  } else if (typeof optMiscElem.value !== Number) {
     optMiscElem.value = "";
   }
 }
@@ -126,7 +140,7 @@ function updateDistribution() {
 
   const discount = calcWaterDiscount(waterLvlElem.value);
   const optMisc = optMiscElem.value;
-  const { Misc, Main, Turtle, GK } = distBE(totalBE.value, discount);
+  const { Misc, Main, Turtle, GK } = distributeBE(totalBEElem.value, discount);
 
   if (optMiscElem.value <= 0) {
     optMiscElem.value = "";
@@ -154,6 +168,6 @@ const updateOnEnter = (e) => {
 
 button.addEventListener("click", (e) => updateDistribution());
 
-totalBE.addEventListener("keyup", updateOnEnter);
+totalBEElem.addEventListener("keyup", updateOnEnter);
 optMiscElem.addEventListener("keyup", updateOnEnter);
 waterLvlElem.addEventListener("keyup", updateOnEnter);
