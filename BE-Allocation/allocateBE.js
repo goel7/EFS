@@ -61,13 +61,13 @@ function distributeBE(totalBE, discount) {
 
   return {
     Misc: easterDist.misc(),
-    Main: formatSci(easterDist.main()),
-    Turtle: formatSci(easterDist.turtle()),
-    GK: formatSci(easterDist.gk()),
+    Main: normalize(easterDist.main()),
+    Turtle: normalize(easterDist.turtle()),
+    GK: normalize(easterDist.gk()),
   };
 }
 
-function formatSci(x) {
+function normalize(x) {
   let preE = Number(String(x).split("e")[0]);
   let postE = Number(String(x).split("e")[1]);
 
