@@ -17,4 +17,6 @@ a {
   font-size: 3rem;
   color: dodgerblue;
   text-underline-offset: 0.5rem;
+
+  margin: 2rem;
 }
