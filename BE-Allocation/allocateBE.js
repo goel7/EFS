@@ -83,6 +83,7 @@ function getBasePower(input) {
   const suffixes = {
     k: 3,
     K: 3,
+    m: 6,
     M: 6,
     B: 9,
     T: 12,
